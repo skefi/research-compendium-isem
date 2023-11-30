@@ -1,0 +1,228 @@
+---
+format:
+  revealjs:
+    theme: night
+    scrollable: true
+    css: assets/custom.css
+slide-number: true
+self-contained: true
+---
+
+## Good practices in research {background-color="black"}
+
+contributing to open science
+
+<br/> <br/> <br/> <br/> <br/> <br/>
+
+::: footer
+ISEM, 30 November 2023
+:::
+
+
+<br/> <br/> 
+
+::: {.notes}
+We are here because we want to contribute to science. It's a collective endeavor. We build on things that have been done in the past and we usually do that collaboratively. 
+In very simplified terms, we collect data/build a model/develop a method, make analysis (data or model), produce some results, write a report on the analysis, publish (share with the community). 
+This is the basis for the system to keep progressive. We add our little stone to the building. It needs to be solid for others to build on. 
+The thing is that in the process, errors can be made. We can prevent that by making it easier for ourselves and others (collaborators, reviewers, users) to spot them. 
+Also we want to be able to prevent fraud. 
+And all of this is helps and improved by sharing our whole process, not only the final report but all the process to get there: this is the principle of open science which is a stepping stone in repoducable science. If things are open, I can reproduce them, I can check them and build on them.
+add a link or an image of this: https://www.nature.com/articles/d41586-023-03177-1
+:::
+
+## Disclaimer
+
+![](assets/cesab_course.png){fig-align="center"}
+
+::: {.notes}
+put a figure of the CESAB course
+add other ressources
+show the webpage
+:::
+
+## A paradigm shift
+
+<br/>
+
+::: incremental
+- People used to think that it was ok not to disclose every step of our work, including data and code 
+
+- ~~An advantage~~  
+:::
+
+::: {.notes}
+Speaker notes go here.
+:::
+
+## A paradigm shift
+
+::: incremental
+- required by funding and journals (open science)
+- allows verification of the work (more rigorous, more reliable) 
+- useful for your collaborators and yourself
+- increases visibility of the work (and citations)
+- fosters credibility and confidence in the scientific process
+- speeds up the [scientific process]{.blue}
+:::
+
+
+# What does it mean? 
+
+## Articles
+
+::: r-stack
+
+![](assets/ele_cover.jpg){.fragment width="400"} ![](assets/science.webp){.fragment width="400"}
+
+![](assets/pnas.webp){.fragment width="350"}
+:::
+
+## Articles {data-background-image="assets/iceberg.png"}
+
+<br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/>
+
+A published article is just the tip of the iceberg that is the research process...
+
+## 
+
+<br/> <br/> <br/>
+
+> "An article about computational results is [advertising]{.blue}, not scholarship. The actual scholarship is the full software environment, code and data, that produced the result."
+
+[Claerbout and Karrenbach 1992.]{.small}
+
+<br/> <br/>
+
+
+## The concepts
+
+[Wilson et al. 2016. Plos Comp Biol. <https://arxiv.org/pdf/1609.00037.pdf>]{.small}
+
+::: incremental
+-   [1. Project Organization : File organisation]{.green}
+
+-   [2. Data management]{.green}
+
+-   [3. Software : Code structure & analysis flow]{.green}
+
+-   [4. Tracking Changes : version management]{.green}
+
+-   [5. Manuscripts]{.green}
+:::
+
+## [1. Project Organization]{.green}
+
+<br/>
+
+"Organizing the digital artifacts of a project to ease discovery and understanding."
+
+<br/> <br/> <br/>
+
+= Research compendium
+
+##  [1. Project Organization]{.green}{background-color="#636363" background-image="assets/folder_mess_cooking.png"}
+
+##  [1. Project Organization]{.green}{background-color="#636363" background-image="assets/folder_tidy_cooking.png"}
+
+## [2. Data management]{.green}
+
+<br/>
+
+::: incremental
+- Saving both raw and intermediate forms
+- Documenting all steps: code data acquisition process when possible, any transformation of the data is coded (and the transformed data seen as a result)
+- Creating tidy data amenable to analysis
+:::
+
+## [2. Data management: Tidy data]{.green}
+
+![](assets/tidy_data.jpg){fig-align="center"}
+
+## [3. Software]{.green}
+
+<br/>
+
+Writing, organizing, and sharing scripts and programs used in an analysis.
+
+::: incremental
+-   Respect code conventions from your community, <https://style.tidyverse.org/>
+
+-   Document your code 
+
+-   Document the workflow (what is done in what order with what)
+
+-   Document software used (OS, versions of R, versions of functions)
+:::
+
+::: {.notes}
+Be consistent!
+Use relative paths
+No spaces, no accents, no capital letters
+:::
+
+## [4. Tracking Changes]{.green}
+
+<br/>
+
+- Track the evolution of your project
+
+- Use a version control software ([**Git**]{.blue}).
+
+
+## [5. Manuscripts]{.green}
+
+<br/>
+
+Writing manuscripts in a way that leaves an audit trail and minimizes manual merging of conflict.
+
+[LaTeX]{.blue} (e.g. overleaf)
+
+[Markdown]{.blue} 
+
+[Quarto]{.blue} (<https://quarto.org>)
+
+![](assets/rstudio-hello.png){fig-align="center"}
+
+## [5. Manuscripts]{.green}
+
+
+![](assets/rstudio-source-visual.png){fig-align="center"}
+
+## Reproducible research? {auto-animate="true" auto-animate-easing="ease-in-out"}
+
+<br/> <br/>
+
+::: r-hstack
+::: {.fragment data-id="box1" auto-animate-delay="0" style="background: #1db1c2; width: 300px; height: 200px; margin: 10px; display: flex; justify-content: center; align-items: center;"}
+data
+:::
+
+::: {.fragment data-id="box2" auto-animate-delay="0.1" style="background: #e8c32e; width: 300px; height: 200px; margin: 10px; display: flex; justify-content: center; align-items: center;"}
+code
+:::
+
+::: {.fragment data-id="box3" auto-animate-delay="0.2" style="background: #a8b035; width: 300px; height: 200px; margin: 10px; display: flex; justify-content: center; align-items: center;"}
+documentation (e.g. article)
+:::
+:::
+
+## Reproducible research {auto-animate="true" auto-animate-easing="ease-in-out"}
+
+<br/> <br/>
+
+::: r-stack
+::: {data-id="box1" style="background: #1db1c2; width: 700px; height: 400px; border-radius: 50px;"}
+:::
+
+::: {data-id="box2" style="background: #e8c32e; width: 600px; height: 300px; border-radius: 50px;"}
+:::
+
+::: {data-id="box3" style="background: #a8b035; width: 500px; height: 200px; border-radius: 50px; display: flex; justify-content: center; align-items: center;"}
+Reproducible research
+:::
+:::
+
+
+
+
