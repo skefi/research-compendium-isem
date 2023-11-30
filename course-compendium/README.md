@@ -4,12 +4,12 @@
 BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgreen.svg)](https://choosealicense.com/licenses/cc-by-4.0/)
 
 
-Code used to create the online presentation **Research compendium** available at:
+Code modified from the code used to create the online presentation **Research compendium** available at:
 [**rdatatoolbox.github.io/course-compendium**](https://rdatatoolbox.github.io/course-compendium)
 
 <br />
 
-:point\_right:  This course is part of the workshop :mortar_board: 
+:point\_right:  This original course was part of the workshop :mortar_board: 
 [**_Data Toolbox for Reproducible Research in Ecology_**](https://rdatatoolbox.github.io) co-organized by the 
 [FRB-CESAB](https://www.fondationbiodiversite.fr/en/about-the-foundation/le-cesab/) 
 and the 
