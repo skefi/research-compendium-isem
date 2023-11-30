@@ -1,0 +1,787 @@
+---
+format:
+  revealjs: 
+    theme: [white, assets/custom.scss]
+self-contained: true
+---
+
+##  {background-image="assets/img/folder_tidy_cooking.png" background-size="100%" background-position="right top"}
+
+# Research Compendium
+
+## Disclaimer
+
+![](assets/cesab_course.png){fig-align="center"}
+
+## Compendium
+
+<br /> <br /> "A collection of concise but detailed information about a particular subject"
+
+<br />
+
+
+:::: {.fragment}
+[A comprehensive archive summarizing your project (data/analysis/code).]{.blue}
+::::
+
+
+## Research Compendium
+
+<br />
+
+-   A few simple rules
+
+-   for you and others
+
+-   so that you can share your code, data, results with your students, supervisors, collaborators and/or the scientific community
+
+##  {background-image="assets/img/folder_mess_cooking.png" background-size="100%" background-position="right top" background-color="#FFFFFF"}
+
+[**The problem**]{.absolute .big .black bottom="0" left="0"} ["I have my own organisation"]{.absolute .fragment .smaller top="20" right="0"}
+
+##  {background-image="assets/img/folder_tidy_cooking.png" background-size="100%" background-position="right top" background-color="#FFFFFF"}
+
+[Here enters ... <br /> ]{.absolute .big .blue bottom="40"
+left="-60"}
+[the 'Research Compendium']{.absolute .big .blue bottom="-30"
+left="-60" .fragment}
+
+## Research compendium
+
+::: {.callout-note collapse="true"}
+## le but ?
+
+The goal of a research compendium is to provide a [standard]{.blue}
+and easily recognisable way for [organising the digital
+materials]{.blue} of a project to enable [others]{.blue} to
+[inspect]{.blue}, [reproduce]{.blue}, and [extend]{.blue} the
+research.
+:::
+
+::: {.fragment}
+::: {.callout-warning}
+## Three Generic Principles
+
+::: {.fragment}
+1.  **Organize files according to prevailing conventions**: i) help
+    other people recognize the structure of the project, ii) supports
+    tool building which takes advantage of the shared structure.
+:::
+::: {.fragment}
+2.  **Separate data, method, and output**, while making the
+    relationship between them clear.
+:::
+::: {.fragment}
+3.  **Specify the computational environment that was used for the
+    original analysis**.
+:::
+:::
+:::
+
+## 1. Organisation (projets) {auto-animate=true}
+
+::: {.callout-note}
+## 1 projet = 1 folder = 1 compendium
+e.g. with RStudio: use Rstudio projects  
+
+<br/> 
+:::
+
+
+::: {.columns}
+::: {.column  .fragment}
+
+```
+    │
+    ├── [my_project]
+    │   └── my_project.Rproj
+    │
+    ├── [another_project]
+    │   └── another_project.Rproj
+    │
+    ├── [again_another_project]
+    │   └── again_another_project.Rproj
+    │
+```
+
+:::
+
+:::
+
+
+## 1. Organisation: e.g. R projets {auto-animate=true}
+
+![](assets/img/setwd_VS_rproj.png){width="300" fig-align="center"}
+
+::: {.callout-warning}
+## Stop to `setwd()` !!
+Absolute paths (e.g. `C:\\Albert\Bureau\PhD`) only work on your computer (and not on others).
+
+Use [relative]{.blue} paths defined from the root of the project: e.g. `outputs/01_datacleaned.csv`,
+`data/data_raw.csv`
+:::
+
+## 1. Organisation: e.g. R projets {auto-animate=true}
+
+<br/>
+
+::: columns
+::: {.column width="40%"}
+![](assets/img/here.png)
+:::
+
+::: {.column width="60%"}
+::: callout-note
+## Use the package [`{here}`](https://here.r-lib.org) 
+
+In your rapports (quarto, Rmarkdown) so that the code creates absolute paths itself:
+
+```r
+# bad !
+setwd("good/luck/where/my_project/is/data")
+dat <- read.csv("data_raw.csv")]
+```
+:::
+:::
+:::
+
+## 1. Organisation: e.g. R projets  {auto-animate=true}
+
+<br/>
+
+::: columns
+::: {.column width="40%"}
+![](assets/img/here.png)
+:::
+
+::: {.column width="60%"}
+::: callout-note
+## Use the package [`{here}`](https://here.r-lib.org) 
+
+In your rapports (quarto, Rmarkdown) so that the code creates absolute paths itself:
+
+```r
+# bad !
+# setwd("good/luck/where/my_project/is/data")
+# dat <- read.csv("data_raw.csv")]
+
+# better
+dat_path <- file.path("data", "data_raw.csv")
+dat <- read.csv(here::here(dat_path))
+```
+:::
+:::
+:::
+
+## 2. Separation of [data]{.orange}, [method]{.blue}, and [output]{.orange}
+
+- Data files, code files and output files are separated.
+
+- This [separation]{.blue} is materialized by [folders]{.blue}.
+
+
+```
+    .
+    ├── my_project.Rproj
+    ├── [data]
+    └── [outputs]
+```
+
+
+## 2. Separation of [data]{.orange}, [method]{.blue}, and [output]{.orange}
+
+- Data files, code files and output files are separated.
+
+- This [separation]{.blue} is materialized by [folders]{.blue}.
+
+
+```
+    .
+    ├── my_project.Rproj
+    ├── [data]
+    └── [outputs]
+```
+
+::: callout-warning
+## Implications
+
+::: {.fragment}
+Keeping data and method separate treats the data as "read-only", so that the original data is untouched and all modifications are transparently documented in the code.
+:::
+::: {.fragment}
+[The output files should be considered as disposable]{.blue}, with a
+mindset that one can always easily regenerate the output using the code and data.
+:::
+:::
+
+
+## 2. Separation of [data]{.blue}, [method]{.orange}, and [output]{.blue}  {auto-animate=false}
+
+<br/>
+- The analysis flow (the methods) is split into reusable pieces ([fonctions]{.orange}), which are called by analyses scripts:
+<br/>
+```
+    .
+    ├── my_project.Rproj
+    ├── [data] (raw data)
+    ├── [R] (fonctions = small pieces of reusable code)
+    ├── [analyses] (scripts)
+    └── [outputs] (results)
+```
+
+## 2. Separation of [data]{.blue}, [method]{.orange}, and [output]{.blue}  {auto-animate=false}
+
+<br/>
+- The analysis flow (the methods) is split into reusable pieces ([fonctions]{.orange}), which are called by analyses scripts:
+<br/>
+```
+    .
+    ├── my_project.Rproj
+    ├── [data]
+    ├── [R]
+    ├── [analyses]
+    └── [outputs]
+```
+
+::: {.callout-important}
+## Careful in R
+
+The folder `R` should only contain `.R` files which contain function definitions.
+Any call in the folder `R`will be executed when calling `devtools::load_all()` or `targets::tar_source()`. 
+:::
+
+
+## 2. Separation of [data]{.blue}, [method]{.orange}, and [output]{.blue}  {auto-animate=false}
+
+::: {.incremental}
+- The analysis flow is split into small steps  
+- Those steps (scripts) are numbered and documented
+:::
+
+::: {.fragment}
+```
+.
+├── my_project.Rproj
+├── [data]
+├── [R]
+├── [analyses]
+│   ├── 00_setup.R (load packages, global variables)
+│   ├── 01_data.R (read and format data)
+│   ├── 02_length-weight.R (first analysis)
+│   ├── 03_plot-length-weight.R (generate first plot)
+│   ├── ...
+└── [outputs]
+```
+:::
+
+## 2. Separation of [data]{.blue}, [method]{.orange}, and [output]{.blue}  {auto-animate=false}
+
+- The analysis flow is split into small steps  
+- Those steps (scripts) are numbered and documented
+
+```
+############################################################
+#
+# 00_setup.R: load packages, set global variables
+#
+############################################################
+```
+
+
+## 2. Separation of [data]{.blue}, [method]{.orange}, and [output]{.blue}  {auto-animate=false}
+
+::: {.incremental}
+- The relationship between which code operates on which data in which order to produce which outputs must be specified as well.
+
+- Use a main script (`make.R`) which executes the different steps in the right order (it's the only R script at the root of the folder!)
+
+:::
+
+::: {.fragment}
+
+```
+.
+├── my_project.Rproj
+├── [data]
+├── [R]
+├── [analyses]
+├── [outputs]
+└── make.R
+```
+:::
+
+
+## 2. Separation of [data]{.blue}, [method]{.orange}, and [output]{.blue}  {auto-animate=false}
+
+- Use a main script (`make.R`) which executes the different steps in the right order (it's the only R script at the root of the folder!)
+
+```r
+############################################################
+#
+# make.R: build the project
+#
+############################################################
+
+source("analyses/00_setup.R")
+
+source("analyses/01_data.R")
+
+source("analyses/02_length-weight.R")
+
+source("analyses/03_plot-length-weight.R")
+
+```
+
+## 2. Separation of [data]{.blue}, [method]{.orange}, and [output]{.blue}  {auto-animate=false}
+
+
+:::: {.fragment}
+- Each script (step) writes results (files) by referring explicitly to their name. 
+
+::: {.incremental}
+
+- The script ["analyses/01_data.R"]{.blue} writes results of the type ["outputs/01_length-weight_females.RData"]{.orange}
+<br/>
+- The script ["analyses/03_plot-length-weight.R"]{.blue} writes results of the type ["figures/03_length-weight_males.png"]{.orange}
+
+:::
+
+::::
+
+
+## 2. Separation of [data]{.blue}, [method]{.blue}, and [output]{.blue}  {auto-animate=true}
+
+<br/>
+
+:::: {.columns}
+
+::: {.column}
+```
+    .
+    ├── my_project.Rproj
+    ├── [data]
+    ├── [R]
+    ├── [analyses]
+    └── [outputs]
+```
+:::
+
+::: {.column}
+
+::: {.fragment fragment-index=1}
+```
+    .
+    ├── my_project.Rproj
+    ├── [data]
+    │   ├── [raw_data]
+    │   └── [derived_data]
+    ├── [R]
+    ├── [analyses]
+    ├── [figures]
+    └── [outputs]
+```
+:::
+:::
+
+::::
+
+::: {.fragment fragment-index=2}
+::: {.callout-note}
+## Flexibility
+
+Depending on your project, the corresponding organisation might be more or less complex. Adapt the compendium to your needs. 
+
+:::
+:::
+
+
+
+## Limits of the approach {auto-animate=true}
+
+![](assets/img/tweet.png){fig-align="center"}
+
+## 2. Separation of [data]{.blue}, [method]{.blue}, and [output]{.orange}  {auto-animate=true}
+
+- Let's also separate documents such as papers and presentations
+
+```
+.
+├── DESCRIPTION
+├── [data]
+├── [R]
+├── [analyses]
+├── [outputs]
+├── [syntheses]
+├── my_project.Rproj
+├── README.md
+├── README.qmd
+├── renv.lock
+└── make.R
+```
+
+## 2. Separation of [data]{.blue}, [method]{.blue}, and [output]{.orange}  {auto-animate=true}
+
+- Separate documents such as papers and presentations
+
+```
+.
+├── DESCRIPTION
+├── [data]
+├── [R]
+├── [analyses]
+├── [outputs]
+├── [syntheses]
+|   ├── paper.qmd
+|   └── presentation.qmd
+├── my_project.Rproj
+├── README.md
+├── README.qmd
+├── renv.lock
+└── make.R
+```
+
+
+## 2. Separation of [data]{.blue}, [method]{.blue}, and [output]{.orange}  {auto-animate=true}
+
+- Separate documents such as papers and presentations
+
+- Add useful resources (biblio, etc ...)
+
+```
+.
+├── DESCRIPTION
+├── [data]
+├── [R]
+├── [analyses]
+├── [outputs]
+├── [syntheses]
+├── [documents]
+├── my_project.Rproj
+├── README.md
+├── README.qmd
+├── renv.lock
+└── make.R
+```
+
+
+## 3. Specify the computational environment {auto-animate=true}
+
+-  Specify the computational environment that was used for the original analysis.
+
+> At its most basic, this could be a plain text file that includes a short list of the names and version numbers of the software and other critical tools used for the analysis. In more complex approaches, described below, the computational environment can be automatically preserved or reproduced as well.
+
+
+## 3. Specify the computational environment {auto-animate=true}
+
+-  Specify the computational environment that was used for the original analysis.
+
+::::: {.columns}
+
+:::: {.column width="60%"}
+
+:::: {.fragment}
+
+::: {.callout-tip}
+## Place a README file at the root of the projet.
+
+e.g. write a `Rmd` or `qmd`, and compile it in `make.R`.
+
+```r
+############################################################
+#
+# make.R: build the project
+#
+############################################################
+
+[...]
+
+source("analyses/03_plot-length-weight.R")
+
+quarto::quarto_render("README.qmd", output_file = "README.md")
+```
+
+:::
+
+::::
+::::
+
+:::: {.column width="40%"}
+
+:::: {.fragment}
+
+
+```
+  .
+  ├── my_project.Rproj
+  ├── [data]
+  ├── [R]
+  ├── [analyses]
+  ├── [outputs]
+  ├── README.md
+  ├── README.qmd
+  └── make.R
+```
+
+::::
+::::
+
+::::
+
+## 3. Specify the computational environment {auto-animate=true}
+
+-  Should specify the computational environment that was used for the original analysis.
+
+- Use a [DESCRIPTION]{.blue} file and the package [renv]{.blue} for the packages!
+
+```
+.
+├── DESCRIPTION
+├── [data]
+├── [R]
+├── [analyses]
+├── [outputs]
+├── my_project.Rproj
+├── README.md
+├── README.qmd
+├── renv.lock
+└── make.R
+```
+
+## 3. Specify the computational environment {auto-animate=true}
+
+-  Should specify the computational environment that was used for the original analysis.
+
+- Use a [DESCRIPTION]{.blue} file and the package [renv]{.blue} for the packages!
+
+:::: {.columns}
+
+::: {.column width="65%"}
+
+`DESCRIPTION`
+
+```
+Package: fish_length-weight_run
+Type: Package
+Title: Fish Length-Weight in la Réunion
+Version: 0.0.0.9000
+
+Imports: 
+    ggplot2,
+    qs
+```
+
+:::
+
+::: {.column width="35%"}
+
+`make.R`
+
+```r
+#renv::init()
+renv::install()
+renv::snapshot()
+```
+
+:::
+::::
+
+
+## 4. Diffusion / stockage
+
+::: {.incremental}
+- There are a number of online options to store your project. 
+
+- Many are private (e.g. Dryad, https://datadryad.org/)
+
+- [Zenodo]{.blue} (https://zenodo.org/) has been created by OpenAIRE and the CERN in 2013 and allows to upload up to 50 GO.
+
+:::
+
+## 4. Diffusion / stockage
+
+- There are a number of online options to store your project. 
+
+- Many are private (e.g. Dryad, https://datadryad.org/)
+
+- [Zenodo]{.blue} (https://zenodo.org/) has been created by OpenAIRE and the CERN in 2013 and allows to upload up to 50 GO.
+
+![](assets/img/zenodo.png){width="300px" fig-align="center"}
+
+
+## Research  Compendium
+```{.code-overflow-wrap}
+    .
+    ├── [data]
+    |   └── raw-data.csv    
+    ├── [R]
+    |   └── functions.R
+    ├── [analyses]
+    |   └── pipeline.R
+    ├── [outputs]
+    ├── [syntheses]
+    |   └── paper.qmd
+    ├── [documents]
+    ├── my_project.Rproj
+    ├── README.md
+    ├── DESCRIPTION
+    ├── Dockerfile
+    ├── renv.lock
+    └── make.R
+```
+
+## Research  Compendium
+
+```{.code-overflow-wrap}
+    .
+    ├── [data]
+    |   └── raw-data.csv
+    ├── [R]
+    |   └── functions.R
+    ├── [analyses]
+    |   └── pipeline.R
+    ├── [outputs]
+    ├── [syntheses]
+    |   └── paper.qmd
+    ├── [documents]
+    ├── my_project.Rproj (projet)
+    ├── README.md
+    ├── DESCRIPTION
+    └── make.R
+```
+
+## Research  Compendium
+
+```{.code-overflow-wrap}
+    .
+    ├── [data]
+    |   └── raw-data.csv (raw data)
+    ├── [R]
+    |   └── functions.R (fonctions)
+    ├── [analyses]
+    |   └── pipeline.R (workflow)
+    ├── [outputs] (results)
+    ├── [syntheses]
+    |   └── paper.qmd
+    ├── [documents]
+    ├── my_project.Rproj (projet)
+    ├── README.md
+    ├── DESCRIPTION
+    └── make.R (setup, workflow)
+```
+
+## Research  Compendium
+
+```{.code-overflow-wrap}
+    .
+    ├── [data]
+    |   └── raw-data.csv (raw data)
+    ├── [R]
+    |   └── functions.R (fonctions)
+    ├── [analyses]
+    |   └── pipeline.R (workflow)
+    ├── [outputs] (results)
+    ├── [syntheses]
+    |   └── paper.qmd
+    ├── [documents]
+    ├── my_project.Rproj (projet)
+    ├── README.md
+    ├── DESCRIPTION (dependences, packages)
+    └── make.R (setup, workflow)
+```
+
+## Research  Compendium
+
+```{.code-overflow-wrap}
+    .
+    ├── [data]
+    |   └── raw-data.csv (raw data)
+    ├── [R]
+    |   └── functions.R (fonctions)
+    ├── [analyses]
+    |   └── pipeline.R (workflow)
+    ├── [outputs] (results)
+    ├── [syntheses]
+    |   └── paper.qmd (article, supp. mat, presentation)
+    ├── [documents] (biblio)
+    ├── my_project.Rproj (projet)
+    ├── README.md
+    ├── DESCRIPTION (dependences, packages)
+    └── make.R (setup, workflow)
+```
+
+## Research  Compendium
+
+```{.code-overflow-wrap}
+    .
+    ├── [data]
+    |   └── raw-data.csv (raw data)
+    ├── [R]
+    |   └── functions.R (fonctions)
+    ├── [analyses]
+    |   └── pipeline.R (workflow)
+    ├── [outputs] (results)
+    ├── [syntheses]
+    |   └── paper.qmd (article, supp. mat, presentation)
+    ├── [documents] (biblio)
+    ├── my_project.Rproj (projet)
+    ├── README.md (help)
+    ├── DESCRIPTION (dependences, packages)
+    └── make.R (setup, workflow)
+```
+
+## Research compendium
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+```{.code-overflow-wrap}
+    .
+    ├── [data]
+    |   └── raw-data.csv
+    ├── [R]
+    |   └── functions.R
+    ├── [analyses]
+    |   └── pipeline.R
+    ├── [outputs]
+    ├── [syntheses]
+    |   └── paper.qmd
+    ├── [documents]
+    ├── my_project.Rproj
+    ├── README.md
+    ├── DESCRIPTION
+    └── make.R
+```
+
+:::
+
+::: {.column width="25%"}
+
+<br/>
+<br/>
+<br/>
+
+
+{{< li scifwrvf trigger=loop delay=1000 scale=50 >}}
+
+:::
+
+::: {.column width="25%"}
+
+<br/>
+<br/>
+<br/>
+
+{{< li pqxdilfs trigger=loop delay=1000 scale=50 >}}
+
+:::
+
+::::
+
+## rcompendium
+
+![](assets/rcompendium.png){fig-align="center"}
+
+::: {.notes}
+show the webpage
+:::
